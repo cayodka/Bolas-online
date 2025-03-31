@@ -25,7 +25,7 @@ const atualizarMovimento = (pedido, resposta, eixo, valor) => {
         const nome = JSON.parse(body).nome;
         const lista = JSON.parse(fs.readFileSync(ARQUIVO_JOGADORES));
 
-        console.log(`Movimento de ${nome} para o eixo ${eixo} com valor ${valor}`); // Depuração
+        console.log(`Movimento de ${nome} para o eixo ${eixo} com valor ${valor}`);
 
         if (lista[nome]) {
             lista[nome][0][eixo] += valor;
@@ -39,11 +39,13 @@ const atualizarMovimento = (pedido, resposta, eixo, valor) => {
 
 const servidor = http.createServer((pedido, resposta) => {
     const url = pedido.url;
-    console.log(`Requisição recebida: ${url}`); // Depuração
+    console.log(`Requisição recebida: ${url}`);
 
     if (url === "/") return lerArquivo("index.html", resposta, "text/html");
     if (url === "/style.css") return lerArquivo("style.css", resposta, "text/css");
     if (url === "/lista") return lerArquivo(ARQUIVO_JOGADORES, resposta, "application/json");
+    if (url === "/index.js") return lerArquivo("index.js", resposta, "application/javascript");
+
 
     if (url === "/adicionarPlayer") {
         let body = "";
